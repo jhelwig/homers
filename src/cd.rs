@@ -1,10 +1,17 @@
 use clap::ArgMatches;
+use std::env;
 use std::process::Command;
 
 pub fn open_shell_at_repo(args: &ArgMatches) -> Result<(), (String, i32)> {
-    println!("CD to: {}", args.value_of("repository").unwrap());
+    info!("CD to: {}", args.value_of("repository").unwrap());
 
-    match Command::new("zsh").status() {
+    let shell = match env::var("SHELL") {
+        Ok(val) => val,
+        Err(e) => return Err((format!("Could not determine shell to use: {}", e), 1)),
+    };
+
+    info!("Using shell: {}", shell);
+    match Command::new(shell).status() {
         Ok(exit_status) => {
             if exit_status.success() {
                 Ok(())
