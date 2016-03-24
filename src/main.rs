@@ -19,7 +19,7 @@ fn main() {
     }
 }
 
-fn run_cli<'a>() -> Result<(), (&'a str, i32)> {
+fn run_cli() -> Result<(), (String, i32)> {
     let matches = cli::app().get_matches();
 
     let verbose_level = match matches.occurrences_of("verbose") {
