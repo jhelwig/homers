@@ -3,6 +3,7 @@
 extern crate env_logger;
 
 mod cli;
+mod cd;
 
 use std::process::exit;
 
@@ -27,7 +28,7 @@ fn run_cli<'a>() -> Result<(), (&'a str, i32)> {
     };
 
     match matches.subcommand_name() {
-        Some("cd") => println!("CD!"),
+        Some("cd") => try!(cd::open_shell_at_repo(matches.subcommand_matches("cd").unwrap())),
         None       => panic!("Subcommand is required, so no idea how we got here!"),
         _          => println!("'{}' is not implemented yet.", matches.subcommand_name().unwrap()),
     };
