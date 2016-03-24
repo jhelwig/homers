@@ -4,13 +4,21 @@ extern crate env_logger;
 
 mod cli;
 
+use std::process::exit;
+
 fn main() {
     env_logger::init().expect("Failed to initialize logger.");
 
-    run_cli();
+    match run_cli() {
+        Ok(_) => {},
+        Err((message, exit_code)) => {
+            error!("Error: {}", message);
+            exit(exit_code);
+        },
+    }
 }
 
-fn run_cli<'a>() -> Result<(), &'a str> {
+fn run_cli<'a>() -> Result<(), (&'a str, i32)> {
     let matches = cli::app().get_matches();
 
     let verbose_level = match matches.occurrences_of("verbose") {
