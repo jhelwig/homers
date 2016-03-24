@@ -13,7 +13,7 @@ fn main() {
     match run_cli() {
         Ok(_) => {},
         Err((message, exit_code)) => {
-            error!("Error: {}", message);
+            error!("{}", message);
             exit(exit_code);
         },
     }
