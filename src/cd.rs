@@ -16,7 +16,8 @@ pub fn open_shell_at_repo(args: &ArgMatches) -> Result<(), (String, i32)> {
             if exit_status.success() {
                 Ok(())
             } else {
-                Err(("Shell failed".to_string(), exit_status.code().unwrap_or(1)))
+                let exit_code = exit_status.code().unwrap_or(1);
+                Err((format!("Shell failed (exit {})", exit_code), exit_code))
             }
         },
         Err(e) => {
