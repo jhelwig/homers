@@ -20,7 +20,7 @@ pub fn open_shell_at_repo(args: &ArgMatches) -> Result<(), (String, i32)> {
             }
         },
         Err(e) => {
-            Err((format!("{}", e), 1))
+            Err((format!("Unable to execute shell: {}", e), 1))
         }
     }
 }
