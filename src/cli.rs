@@ -1,8 +1,10 @@
+include!(concat!(env!("OUT_DIR"), "/version.rs"));
+
 use clap::{App, AppSettings, Arg, SubCommand};
 
 pub fn app<'a, 'b>() -> App<'a, 'b> {
     App::new("homers")
-    .version(crate_version!())
+    .version(VERSION)
     .author("Jacob Helwig <jacob@technosorcery.net>")
     .about("Manage dotfiles in your home directory.")
     .setting(AppSettings::SubcommandRequiredElseHelp)
