@@ -1,6 +1,7 @@
 include!(concat!(env!("OUT_DIR"), "/version.rs"));
 
 use clap::{App, AppSettings, Arg, SubCommand};
+use std::path::Path;
 
 pub fn app<'a, 'b>() -> App<'a, 'b> {
     App::new("homers")
@@ -22,6 +23,18 @@ pub fn app<'a, 'b>() -> App<'a, 'b> {
          .short("p")
          .long("pretend")
          .help("Show what would be done, instead of making changes"))
+    .arg(Arg::with_name("homers-dir")
+         .short("d")
+         .long("homers-dir")
+         .help("Path to where the repositories are stored (Default: ~/.homers)")
+         .takes_value(true)
+         .validator(|val: String| -> Result<(), String> {
+            if Path::new(&val).exists() {
+                Ok(())
+            } else {
+                Err(format!("Path does not exist for --homers-dir: {}", val))
+            }
+         }))
     .subcommand(command_cd())
     .subcommand(command_clone())
     .subcommand(command_commit())
