@@ -2,15 +2,21 @@ use clap::ArgMatches;
 use std::env;
 use std::process::Command;
 
-pub fn open_shell_at_repo(args: &ArgMatches) -> Result<(), (String, i32)> {
-    info!("CD to: {}", args.value_of("repository").unwrap());
+use settings::Settings;
+
+pub fn open_shell_at_repo(settings: &Settings, args: &ArgMatches) -> Result<(), (String, i32)> {
+    let repository = args.value_of("repository").unwrap();
 
     let shell = match env::var("SHELL") {
         Ok(val) => val,
         Err(e) => return Err((format!("Could not determine shell to use: {}", e), 1)),
     };
 
-    info!("Using shell: {}", shell);
+    let repo_path = settings.repo_base_dir.join(repository);
+    if !repo_path.exists() {
+        return Err((format!("Repo path does not exist: {}", repo_path.display()), 1));
+    }
+
     match Command::new(shell).status() {
         Ok(exit_status) => {
             if exit_status.success() {
