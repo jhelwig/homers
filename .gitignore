@@ -14,3 +14,4 @@
 .*.sw?
 /.idea/
 /homers.iml
+/out/
