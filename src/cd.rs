@@ -14,7 +14,8 @@ pub fn open_shell_at_repo(settings: &Settings, args: &ArgMatches) -> Result<(), 
 
     let repo_path = settings.repo_path(&repository);
     if !repo_path.exists() {
-        return Err((format!("Repo path does not exist: {}", repo_path.display()), 1));
+        return Err((format!("Repo path does not exist: {}", repo_path.display()),
+                    1));
     }
 
     match Command::new(shell)

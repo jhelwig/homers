@@ -9,7 +9,7 @@ pub fn clone(settings: &Settings, args: &ArgMatches) -> Result<(), (String, i32)
     let repo_path = settings.repo_path(repo_name);
 
     match Repository::clone(url, repo_path) {
-        Ok(_)  => Ok(()),
+        Ok(_) => Ok(()),
         Err(e) => Err((format!("Failed to clone repository: {}", e), 2)),
     }
 }
