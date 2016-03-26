@@ -18,8 +18,8 @@ pub fn open_shell_at_repo(settings: &Settings, args: &ArgMatches) -> Result<(), 
     }
 
     match Command::new(shell)
-                  .current_dir(repo_path)
-                  .status() {
+              .current_dir(repo_path)
+              .status() {
         Ok(exit_status) => {
             if exit_status.success() {
                 Ok(())
@@ -27,9 +27,7 @@ pub fn open_shell_at_repo(settings: &Settings, args: &ArgMatches) -> Result<(), 
                 let exit_code = exit_status.code().unwrap_or(1);
                 Err((format!("Shell failed (exit {})", exit_code), exit_code))
             }
-        },
-        Err(e) => {
-            Err((format!("Unable to execute shell: {}", e), 1))
         }
+        Err(e) => Err((format!("Unable to execute shell: {}", e), 1)),
     }
 }

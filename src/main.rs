@@ -14,11 +14,11 @@ fn main() {
     env_logger::init().expect("Failed to initialize logger.");
 
     match run_cli() {
-        Ok(_) => {},
+        Ok(_) => {}
         Err((message, exit_code)) => {
             error!("{}", message);
             exit(exit_code);
-        },
+        }
     }
 }
 

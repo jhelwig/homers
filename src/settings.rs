@@ -10,7 +10,12 @@ pub struct Settings {
 pub fn from_matches(matches: &ArgMatches) -> Settings {
     let repo_base = match matches.value_of("homers-dir") {
         Some(x) => Path::new(x).to_path_buf(),
-        None    => Path::new(&env::var("HOME").unwrap_or_else(|_| panic!("Unable to find HOME")).to_string()).join(".homers"),
+        None => {
+            Path::new(&env::var("HOME")
+                           .unwrap_or_else(|_| panic!("Unable to find HOME"))
+                           .to_string())
+                .join(".homers")
+        }
     };
 
     let verbose_level = match matches.occurrences_of("verbose") {
