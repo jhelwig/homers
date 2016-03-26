@@ -1,9 +1,11 @@
 #[macro_use] extern crate clap;
 #[macro_use] extern crate log;
 extern crate env_logger;
+extern crate git2;
 
-mod cli;
 mod cd;
+mod cli;
+mod repository;
 mod settings;
 
 use std::process::exit;
@@ -26,9 +28,10 @@ fn run_cli() -> Result<(), (String, i32)> {
     let settings = settings::from_matches(&matches);
 
     match matches.subcommand_name() {
-        Some("cd") => try!(cd::open_shell_at_repo(&settings, matches.subcommand_matches("cd").unwrap())),
-        None       => panic!("Subcommand is required, so no idea how we got here!"),
-        _          => println!("'{}' is not implemented yet.", matches.subcommand_name().unwrap()),
+        Some("cd")    => try!(cd::open_shell_at_repo(&settings, matches.subcommand_matches("cd").unwrap())),
+        Some("clone") => try!(repository::clone(&settings, matches.subcommand_matches("clone").unwrap())),
+        None          => panic!("Subcommand is required, so no idea how we got here!"),
+        _             => println!("'{}' is not implemented yet.", matches.subcommand_name().unwrap()),
     };
 
     Ok(())
