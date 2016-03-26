@@ -12,7 +12,7 @@ pub fn open_shell_at_repo(settings: &Settings, args: &ArgMatches) -> Result<(), 
         Err(e) => return Err((format!("Could not determine shell to use: {}", e), 1)),
     };
 
-    let repo_path = settings.repo_base_dir.join(repository);
+    let repo_path = settings.repo_path(&repository);
     if !repo_path.exists() {
         return Err((format!("Repo path does not exist: {}", repo_path.display()), 1));
     }
