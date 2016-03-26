@@ -17,7 +17,9 @@ pub fn open_shell_at_repo(settings: &Settings, args: &ArgMatches) -> Result<(), 
         return Err((format!("Repo path does not exist: {}", repo_path.display()), 1));
     }
 
-    match Command::new(shell).status() {
+    match Command::new(shell)
+                  .current_dir(repo_path)
+                  .status() {
         Ok(exit_status) => {
             if exit_status.success() {
                 Ok(())
