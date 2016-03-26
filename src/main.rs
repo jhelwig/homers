@@ -25,11 +25,6 @@ fn run_cli() -> Result<(), (String, i32)> {
 
     let settings = settings::from_matches(&matches);
 
-    let verbose_level = match matches.occurrences_of("verbose") {
-        0...4 => matches.occurrences_of("verbose"),
-        _ => 4,
-    };
-
     match matches.subcommand_name() {
         Some("cd") => try!(cd::open_shell_at_repo(&settings, matches.subcommand_matches("cd").unwrap())),
         None       => panic!("Subcommand is required, so no idea how we got here!"),
