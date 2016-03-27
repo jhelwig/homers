@@ -16,6 +16,7 @@ pub fn app<'a, 'b>() -> App<'a, 'b> {
                  .short("v")
                  .long("verbose")
                  .multiple(true)
+                 .overrides_with("quiet")
                  .help("Sets the level of verbosity"))
         .arg(Arg::with_name("pretend")
                  .short("p")

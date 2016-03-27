@@ -4,7 +4,21 @@ use std::path::{Path, PathBuf};
 
 pub struct Settings {
     repo_base_dir: PathBuf,
-    verbose_level: u8,
+    verbose_level: i8,
+}
+
+impl Settings {
+    pub fn repo_base_dir(&self) -> &PathBuf {
+        &self.repo_base_dir
+    }
+
+    pub fn repo_path(&self, repository: &str) -> PathBuf {
+        self.repo_base_dir().join(repository)
+    }
+
+    pub fn verbose_level(&self) -> i8 {
+        self.verbose_level
+    }
 }
 
 pub fn from_matches(matches: &ArgMatches) -> Settings {
@@ -18,27 +32,18 @@ pub fn from_matches(matches: &ArgMatches) -> Settings {
         }
     };
 
-    let verbose_level = match matches.occurrences_of("verbose") {
-        0...4 => matches.occurrences_of("verbose"),
+    let mut verbose_level: i8 = match matches.occurrences_of("verbose") {
+        0...4 => matches.occurrences_of("verbose") as i8,
         _ => 4,
     };
 
+    if matches.is_present("quiet") {
+        verbose_level = -1;
+    }
+
     Settings {
         repo_base_dir: repo_base,
-        verbose_level: verbose_level as u8,
+        verbose_level: verbose_level,
     }
 }
 
-impl Settings {
-    pub fn repo_base_dir(&self) -> &PathBuf {
-        &self.repo_base_dir
-    }
-
-    pub fn repo_path(&self, repository: &str) -> PathBuf {
-        self.repo_base_dir().join(repository)
-    }
-
-    pub fn verbose_level(&self) -> u8 {
-        self.verbose_level
-    }
-}
