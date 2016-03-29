@@ -12,6 +12,8 @@ mod settings;
 
 use std::process::exit;
 
+use settings::Settings;
+
 fn main() {
     env_logger::init().expect("Failed to initialize logger.");
 
@@ -27,7 +29,7 @@ fn main() {
 fn run_cli() -> Result<(), (String, i32)> {
     let matches = cli::app().get_matches();
 
-    let settings = settings::from_matches(&matches);
+    let settings = Settings::from_matches(&matches);
 
     match matches.subcommand() {
         ("cd", Some(m)) => try!(cd::open_shell_at_repo(&settings, m)),
