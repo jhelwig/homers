@@ -70,12 +70,12 @@ pub fn link_repo(settings: &Settings, args: &ArgMatches) -> Result<(), (String, 
 
         if repo_link.exists() {
             if repo_link.correct() {
-                link_status = Blue.paint("identical");
+                link_status = Blue.bold().paint("identical");
             } else {
-                link_status = Red.paint("conflict");
+                link_status = Red.bold().paint("conflict");
             }
         } else {
-            link_status = Green.paint("symlink");
+            link_status = Green.bold().paint("symlink");
         }
 
         // The .to_string() is here, since an ANSIString doesn't know how to pad itself, but a
@@ -83,10 +83,10 @@ pub fn link_repo(settings: &Settings, args: &ArgMatches) -> Result<(), (String, 
         //
         // 12 would get us the spacing we want, IF we weren't counting the invisible color control
         // codes, but since we are (due to ANSIString -> String conversion), we need to bump the
-        // field out to 20 characters.
+        // field out to 22 characters.
         //
         // :sad_trombone:
-        println!("{: >20} {}",
+        println!("{: >22} {}",
                  link_status.to_string(),
                  repo_link.source().display());
     }
