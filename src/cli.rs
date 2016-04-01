@@ -27,6 +27,7 @@ pub fn app<'a, 'b>() -> App<'a, 'b> {
                  .long("homers-dir")
                  .help("Path to where the repositories are stored (Default: ~/.homers)")
                  .takes_value(true)
+                 .value_name("dir")
                  .validator(|val: String| -> Result<(), String> {
                      if Path::new(&val).exists() {
                          Ok(())
