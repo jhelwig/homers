@@ -34,7 +34,9 @@ fn run_cli() -> Result<(), (String, i32)> {
         ("cd", Some(m)) => try!(cd::open_shell_at_repo(&settings, m)),
         ("clone", Some(m)) => try!(repository::clone(&settings, m)),
         ("link", Some(m)) => try!(repository::link_repo(&settings, m)),
-        (name, _) => println!("'{}' is not implemented yet.", name),
+        (name, _) => {
+            return Err((format!("'{}' is not implemented yet.", name), 1));
+        }
     };
 
     Ok(())
