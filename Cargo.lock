@@ -2,6 +2,7 @@
 name = "homers"
 version = "0.0.1"
 dependencies = [
+ "ansi_term 0.7.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "clap 2.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "env_logger 0.3.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "git2 0.4.2 (registry+https://github.com/rust-lang/crates.io-index)",
